@@ -9,7 +9,7 @@ exports.isAuthanticated = asyncErrors(async (req,res,next)=>{
         return next(new ErrorHendler("login to access the page",401))
     }
     const { id } = jwt.verify(token,process.env.JWT_SECRET)
-
-    res.json({ id , token})
+    req.id = id
+    next();
 
 })

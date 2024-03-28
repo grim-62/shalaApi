@@ -1,11 +1,19 @@
 const { asyncErrors } = require("../middlewares/catchTry")
+const student = require("../models/studentModel")
 const studentModel = require('../models/studentModel')
 const ErrorHendler = require("../utils/ErrorHendler")
 const { sendtoken } = require("../utils/SendToken")
+
+
 exports.homepage = asyncErrors(async(req,res,next)=>{
     res.json({
         message:"Secure home page"
     })
+})
+
+exports.currentUser = asyncErrors(async(req,res,next)=>{
+    const student = await studentModel.findById(req.id).exec()
+    res.json({student})
 })
 
 exports.studentsignup = asyncErrors(async(req,res,next)=>{
