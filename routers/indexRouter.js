@@ -6,7 +6,7 @@ const { homepage,
         studentsignout,
         currentUser,
         sendmail,
-
+        forgetlink,
 } = require('../controllers/indexCentroller');
 const { isAuthanticated } = require('../middlewares/auth');
 
@@ -21,5 +21,7 @@ router.post('/student/signin', studentsignin );
 router.post('/student/signout',isAuthanticated, studentsignout );
 
 router.post('/student/send-mail', sendmail );
+
+router.get('/student/forget-link/:id', forgetlink );
 
 module.exports = router;

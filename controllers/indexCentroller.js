@@ -3,6 +3,7 @@ const student = require("../models/studentModel")
 const studentModel = require('../models/studentModel')
 const ErrorHendler = require("../utils/ErrorHendler")
 const { sendtoken } = require("../utils/SendToken")
+const { sendmail } = require("../utils/nodemailer")
 
 
 exports.homepage = asyncErrors(async(req,res,next)=>{
@@ -42,7 +43,24 @@ exports.studentsignout = asyncErrors(async(req,res,next)=>{
 })
 
 exports.sendmail = asyncErrors(async(req,res,next)=>{
-    
+    const student = await studentModel.findOne({email:req.body.email}).exec()
 
-    res.json({message:"mail send karo"})
+    if(!student) return next(
+        new ErrorHendler("User not found with this email address",404)
+    );
+
+    const url = `${req.protocol}://${req.get("host")}/student/reset-link/${student._id}`;
+    sendmail(req,res,next,url)
+    res.json({student,url})
+})
+
+exports.forgetlink = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.body.id);
+    
+    if(!student)return next(
+        new ErrorHendler("User not found with this email addrss",404)
+    )
+    student.password = req.body.password;
+    await student
+
 })
