@@ -40,3 +40,9 @@ exports.studentsignout = asyncErrors(async(req,res,next)=>{
     res.clearCookie('token')
     res.json({success:"successfully signout!"})
 })
+
+exports.sendmail = asyncErrors(async(req,res,next)=>{
+    
+
+    res.json({message:"mail send karo"})
+})

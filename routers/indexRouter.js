@@ -5,6 +5,7 @@ const { homepage,
         studentsignin, 
         studentsignout,
         currentUser,
+        sendmail,
 
 } = require('../controllers/indexCentroller');
 const { isAuthanticated } = require('../middlewares/auth');
@@ -18,5 +19,7 @@ router.post('/student/signup', studentsignup );
 router.post('/student/signin', studentsignin );
 
 router.post('/student/signout',isAuthanticated, studentsignout );
+
+router.post('/student/send-mail', sendmail );
 
 module.exports = router;
