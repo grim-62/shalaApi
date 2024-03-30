@@ -49,18 +49,40 @@ exports.sendmail = asyncErrors(async(req,res,next)=>{
         new ErrorHendler("User not found with this email address",404)
     );
 
-    const url = `${req.protocol}://${req.get("host")}/student/reset-link/${student._id}`;
-    sendmail(req,res,next,url)
+    const url = `${req.protocol}://${req.get("host")}/student/forgot-link/${student._id}`;
+    sendmail(req,res,next,url);
+    student.resetPasswordToken = "1";
     res.json({student,url})
 })
 
 exports.forgetlink = asyncErrors(async (req,res,next)=>{
-    const student = await studentModel.findById(req.body.id);
-    
-    if(!student)return next(
-        new ErrorHendler("User not found with this email addrss",404)
-    )
-    student.password = req.body.password;
-    await student
+  const student = await studentModel.findById(req.params.id)
 
+  if(!student) return next(
+    new ErrorHendler("User not found with this email address",404)
+  );
+
+  if(!student.resetPasswordToken === "1"){
+    
+      student.password = req.body.password
+      await student.save();
+  }else{
+    return next(
+        new ErrorHendler("invalid Reset password Link! please try again..")
+    )
+  }
+
+  res.json({
+    sucess:true,
+    message:"password changed successfully!"
+  })
+})
+
+exports.resetPassword  = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+  
+    student.password = req.body.password
+    await student.save();
+    sendtoken(student,201,res)
+   
 })
