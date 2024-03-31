@@ -8,6 +8,8 @@ const { homepage,
         sendmail,
         forgetlink,
         resetPassword,
+        studentUpdate,
+        studentAvatar,
 } = require('../controllers/indexCentroller');
 const { isAuthanticated } = require('../middlewares/auth');
 
@@ -27,5 +29,8 @@ router.get('/student/forgot-link/:id', forgetlink );
 
 router.post('/student/reset-password/:id', isAuthanticated , resetPassword );
 
+router.post('/student/update/:id', isAuthanticated , studentUpdate );
+
+router.post('/student/avatar/:id', isAuthanticated , studentAvatar );
 
 module.exports = router;
