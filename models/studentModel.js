@@ -58,7 +58,13 @@ const studentModel = new mongoose.Schema({
         type:String,
         default:"0"
     },
-    avatar:String,
+    avatar:{
+        type:Object,
+        default:{
+            fileId:'',
+            url:'default.img',
+        }
+    },
 },{
     timestamps:true
 })

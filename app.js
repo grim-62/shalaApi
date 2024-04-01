@@ -12,12 +12,14 @@ const cookieparser = require('cookie-parser');
 const ErrorHendler = require('./utils/ErrorHendler');
 const { generatedErrors } = require('./middlewares/errors');
 const cookieParser = require('cookie-parser');
+const fileupload = require('express-fileupload')
 
 app.use(expressSession({
     resave:true,
     saveUninitialized:true,
     secret:process.env.EXPRESS_SESSION_SECRET
 }))
+app.use(fileupload())
 app.use(cookieParser())
 app.use(logger('tiny'));
 app.use(express.json())

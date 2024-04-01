@@ -4,7 +4,8 @@ const studentModel = require('../models/studentModel')
 const ErrorHendler = require("../utils/ErrorHendler")
 const { sendtoken } = require("../utils/SendToken")
 const { sendmail } = require("../utils/nodemailer")
-
+const imagekit = require("../utils/imagekit").initImageKit()
+const path = require('path');
 
 exports.homepage = asyncErrors(async(req,res,next)=>{
     res.json({
@@ -96,7 +97,16 @@ exports.studentUpdate = asyncErrors(async (req, res, next)=>{
 })
 
 exports.studentAvatar = asyncErrors(async (req, res, next)=>{
-   
+    const student = await studentModel.findById(req.parems.id).exec()
+    const file = req.files.avatar;
+    const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(file.name)}`
+
+    const {fileId, url}= await imagekit.upload({
+        file:file.data,
+        fileName:modifiedFileName,
+    })
+    student.avatar ={fileId,url}
+    res.json({image})
     
 })
 
