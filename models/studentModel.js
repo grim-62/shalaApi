@@ -65,6 +65,17 @@ const studentModel = new mongoose.Schema({
             url:'default.img',
         }
     },
+    resume:{
+        education:[],
+        jobs:[],
+        internship:[],
+        responsibilities:[],
+        courses:[],
+        projects:[],
+        skills:[],
+        accomplishments:[],
+
+    }
 },{
     timestamps:true
 })

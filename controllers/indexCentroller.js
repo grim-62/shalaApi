@@ -97,16 +97,20 @@ exports.studentUpdate = asyncErrors(async (req, res, next)=>{
 })
 
 exports.studentAvatar = asyncErrors(async (req, res, next)=>{
-    const student = await studentModel.findById(req.parems.id).exec()
+    const student = await studentModel.findById(req.params.id).exec()
     const file = req.files.avatar;
     const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(file.name)}`
+
+    if(!student.avatar !== ""){
+        await imagekit.deleteFile(student.avatar.fileId)
+    }
 
     const {fileId, url}= await imagekit.upload({
         file:file.data,
         fileName:modifiedFileName,
     })
     student.avatar ={fileId,url}
-    res.json({image})
+    student.save()
+    res.json({file:req.files.avatar})
     
 })
-

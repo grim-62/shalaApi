@@ -25,7 +25,8 @@ app.use(logger('tiny'));
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-app.use('/',require('./routers/indexRouter'))
+app.use('/user',require('./routers/indexRouter'))
+app.use('/resume',require('./routers/resumeRouter'))
 
 app.all('*',(req,res,next)=>{
     next( new ErrorHendler(`Request Url Not Found ${req.url}`, 404 ))
