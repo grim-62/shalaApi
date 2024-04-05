@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const studentModel = new mongoose.Schema({
+    
     firstname:{
         type:String,
         required:[true,"First name is required."],
@@ -75,7 +76,8 @@ const studentModel = new mongoose.Schema({
         skills:[],
         accomplishments:[],
 
-    }
+    },
+
 },{
     timestamps:true
 })

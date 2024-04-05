@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const {resumehome} = require("../controllers/resumeController");
+const { resume,
+        addeducation,
+        editeducation,       
+} = require("../controllers/resumeController");
 const { isAuthanticated } = require('../middlewares/auth')
 
-router.get('/',isAuthanticated,resumehome)
+router.get('/',isAuthanticated, resume );
+
+router.post('/add-edu',isAuthanticated, addeducation );
+
+router.post('/edit-edu/:eduid',isAuthanticated, editeducation );
 
 module.exports = router
