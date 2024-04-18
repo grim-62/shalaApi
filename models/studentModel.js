@@ -29,7 +29,7 @@ const studentModel = new mongoose.Schema({
     gender:{
         type:String,
         Enum:["Male","Female","Others"]
-    },
+    }, 
     email:{
         type:String,
         required:[true,"Email is required"],
@@ -75,7 +75,6 @@ const studentModel = new mongoose.Schema({
         projects:[],
         skills:[],
         accomplishments:[],
-
     },
 
 },{
