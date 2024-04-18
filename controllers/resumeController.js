@@ -96,14 +96,135 @@ exports.deleteint = asyncErrors(async (req,res,next)=>{
 
 //  =========== responsibilities ================= //
 
-exports.addrespo = asyncErrors(async (req,res,next)=>{})
+exports.addrespo = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+    student.resume.responsibilities.push({...req.body,id:uuidv4()})
+    await student.save();
+    res.json({message: "! responsibilities added "})
+})
 
-exports.editrespo = asyncErrors(async (req,res,next)=>{})
+exports.editrespo = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const respoIndex = student.resume.responsibilities.findIndex((i)=> i.id === req.params.respoid);
+    student.resume.responsibilities[respoIndex] = {
+        ...student.resume.responsibilities[respoIndex],
+        ...req.body}
+        await student.save()
+        res.json({messaage:"!responsibilities updated" });
+})
 
-exports.deleterespo = asyncErrors(async (req,res,next)=>{})
+exports.deleterespo = asyncErrors(async (req,res,next)=>{  
+    const student = await studentModel.findById(req.id);
+    const filterrespo = student.resume.responsibilities.filter((i)=> i.id !== req.params.respoid);
+    student.resume.responsibilities = filterrespo
+    await student.save()
+    res.json({messaage:"! responsability deleted" });
+})
 
 //  =========== courses ================= //
 
+exports.addcourse = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+    student.resume.courses.push({...req.body,id:uuidv4()})
+    await student.save();
+    res.json({message: "courses added!"})
+})
+
+exports.editcourse = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const corIndex = student.resume.courses.findIndex((i)=> i.id === req.params.corid);
+    student.resume.courses[corIndex] = {
+        ...student.resume.courses[corIndex],
+        ...req.body}
+        await student.save()
+        res.json({messaage:"courses updated!" });
+})
+
+exports.deletecourse = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const filtercor = student.resume.courses.filter((i)=> i.id !== req.params.corid);
+    student.resume.courses = filtercor
+    await student.save()
+    res.json({messaage:"courses deleted!" });
+})
+
 //  =========== projects ================= //
+
+exports.addproject = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+    student.resume.projects.push({...req.body,id:uuidv4()})
+    await student.save();
+    res.json({message: "projects added!"})
+})
+
+exports.editproject = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const proIndex = student.resume.projects.findIndex((i)=> i.id === req.params.proid);
+    student.resume.projects[proIndex] = {
+        ...student.resume.projects[proIndex],
+        ...req.body}
+        await student.save()
+        res.json({messaage:"projects updated!" });
+})
+
+exports.deleteproject = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const filtercor = student.resume.projects.filter((i)=> i.id !== req.params.proid);
+    student.resume.projects = filtercor
+    await student.save()
+    res.json({messaage:"projects deleted!" });
+})
+
 //  =========== skills ================= //
+
+exports.addskill = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+    student.resume.skills.push({...req.body,id:uuidv4()})
+    await student.save();
+    res.json({message: "skills added!"})
+})
+
+exports.editskill = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const proIndex = student.resume.skills.findIndex((i)=> i.id === req.params.skillid);
+    student.resume.skills[proIndex] = {
+        ...student.resume.skills[proIndex],
+        ...req.body}
+        await student.save()
+        res.json({messaage:"skills updated!" });
+})
+
+exports.deleteskill = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const filterskill = student.resume.skills.filter((i)=> i.id !== req.params.skillid);
+    student.resume.skills = filterskill
+    await student.save()
+    res.json({messaage:"skills deleted!" });
+})
+
 //  =========== accomplishments ================= //
+
+exports.addacco = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id)
+    student.resume.accomplishments.push({...req.body,id:uuidv4()})
+    await student.save();
+    res.json({message: "accomplishments added!"})
+})
+
+exports.editacco = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const accoIndex = student.resume.accomplishments.findIndex((i)=> i.id === req.params.accoid);
+    student.resume.accomplishments[accoIndex] = {
+        ...student.resume.accomplishments[accoIndex],
+        ...req.body}
+        await student.save()
+        res.json({messaage:"accomplishments updated!" });
+})
+
+exports.deleteacco = asyncErrors(async (req,res,next)=>{
+    const student = await studentModel.findById(req.id);
+    const filteracco = student.resume.accomplishments.filter((i)=> i.id !== req.params.accoid);
+    student.resume.accomplishments = filteracco
+    await student.save()
+    res.json({messaage:"accomplishments deleted!" });
+})
