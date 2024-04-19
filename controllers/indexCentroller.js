@@ -1,5 +1,4 @@
 const { asyncErrors } = require("../middlewares/catchTry")
-const student = require("../models/studentModel")
 const studentModel = require('../models/studentModel')
 const ErrorHendler = require("../utils/ErrorHendler")
 const { sendtoken } = require("../utils/SendToken")
