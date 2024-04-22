@@ -41,74 +41,76 @@ exports.employesignout = asyncErrors(async(req,res,next)=>{
     res.json({success:"successfully signout!"})
 })
 
-// exports.sendmail = asyncErrors(async(req,res,next)=>{
-//     const employe = await employeModel.findOne({email:req.body.email}).exec()
+exports.sendmail = asyncErrors(async(req,res,next)=>{
+    const employe = await employeModel.findOne({email:req.body.email}).exec()
 
-//     if(!employe) return next(
-//         new ErrorHendler("User not found with this email address",404)
-//     );
+    if(!employe) return next(
+        new ErrorHendler("User not found with this email address",404)
+    );
 
-//     const url = `${req.protocol}://${req.get("host")}/employe/forgot-link/${employe._id}`;
-//     sendmail(req,res,next,url);
-//     employe.resetPasswordToken = "1";
-//     res.json({employe,url})
-// })
+    const url = `${req.protocol}://${req.get("host")}/employe/forgot-link/${employe._id}`;
+    sendmail(req,res,next,url);
+    employe.resetPasswordToken = "1";
+    res.json({employe,url})
+})
 
-// exports.forgetlink = asyncErrors(async (req,res,next)=>{
-//   const employe = await employeModel.findById(req.params.id)
+exports.forgetlink = asyncErrors(async (req,res,next)=>{
+  const employe = await employeModel.findById(req.params.id)
 
-//   if(!employe) return next(
-//     new ErrorHendler("User not found with this email address",404)
-//   );
+  if(!employe) return next(
+    new ErrorHendler("User not found with this email address",404)
+  );
 
-//   if(!employe.resetPasswordToken === "1"){
+  if(!employe.resetPasswordToken === "1"){
     
-//       employe.password = req.body.password
-//       await employe.save();
-//   }else{
-//     return next(
-//         new ErrorHendler("invalid Reset password Link! please try again..")
-//     )
-//   }
+      employe.password = req.body.password
+      await employe.save();
+  }else{
+    return next(
+        new ErrorHendler("invalid Reset password Link! please try again..")
+    )
+  }
 
-//   res.json({
-//     sucess:true,
-//     message:"password changed successfully!"
-//   })
-// })
+  res.json({
+    sucess:true,
+    message:"password changed successfully!"
+  })
 
-// exports.resetPassword  = asyncErrors(async (req,res,next)=>{
-//     const employe = await employeModel.findById(req.id)
+})
+
+exports.resetPassword  = asyncErrors(async (req,res,next)=>{
+    const employe = await employeModel.findById(req.id)
   
-//     employe.password = req.body.password
-//     await employe.save();
-//     sendtoken(employe,201,res)
+    employe.password = req.body.password
+    await employe.save();
+    sendtoken(employe,201,res)
    
-// })
+})
 
-// exports.employeUpdate = asyncErrors(async (req, res, next)=>{
-//     const employe = await employeModel.findByIdAndUpdate(req.params.id,req.body)
-//     res.status(200).json({
-//         success:true,
-//         message:"employe updated successfully"
-//     })
-// })
+exports.employeUpdate = asyncErrors(async (req, res, next)=>{
+    const employe = await employeModel.findByIdAndUpdate(req.params.id,req.body)
+    res.status(200).json({
+        success:true,
+        employe,
+        message:"employe updated successfully"
+    })
+})
 
-// exports.employeAvatar = asyncErrors(async (req, res, next)=>{
-//     const employe = await employeModel.findById(req.params.id).exec()
-//     const file = req.files.avatar;
-//     const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(file.name)}`
+exports.employeorglogo = asyncErrors(async (req, res, next)=>{
+    const employe = await employeModel.findById(req.params.id).exec()
+    const file = req.files.orglogo;
+    const modifiedFileName = `resumebuilder-${Date.now()}${path.extname(file.name)}`
 
-//     if(!employe.avatar !== ""){
-//         await imagekit.deleteFile(employe.avatar.fileId)
-//     }
+    if(employe.orglogo.fileId !== ""){
+        await imagekit.deleteFile(employe.orglogo.fileId)
+    }
 
-//     const {fileId, url}= await imagekit.upload({
-//         file:file.data,
-//         fileName:modifiedFileName,
-//     })
-//     employe.avatar ={fileId,url}
-//     employe.save()
-//     res.json({file:req.files.avatar})
+    const {fileId, url}= await imagekit.upload({
+        file:file.data,
+        fileName:modifiedFileName,
+    })
+    employe.orglogo ={fileId,url}
+    employe.save()
+    res.json({file:req.files.orglogo})
     
-// })
+})

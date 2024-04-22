@@ -5,11 +5,11 @@ const { homepage,
         employesignin, 
         employesignout,
         currentEmploye,
-        // sendmail,
-        // forgetlink,
-        // resetPassword,
-        // employeUpdate,
-        // employeAvatar,
+        sendmail,
+        forgetlink,
+        resetPassword,
+        employeUpdate,
+        employeorglogo
 } = require('../controllers/employeCentroller');
 const { isAuthanticated } = require('../middlewares/auth');
 
@@ -23,14 +23,14 @@ router.post('/signin', employesignin );
 
 router.post('/signout', isAuthanticated, employesignout );
 
-// router.post('/employe/send-mail', sendmail );
+router.post('/send-mail', sendmail );
 
-// router.get('/employe/forgot-link/:id', forgetlink );
+router.get('/forgot-link/:id', forgetlink ); //this link is not working
 
-// router.post('/employe/reset-password/:id', isAuthanticated , resetPassword );
+router.post('/reset-password/:id', isAuthanticated , resetPassword );
 
-// router.post('/employe/update/:id', isAuthanticated , employeUpdate );
+router.post('/update/:id', isAuthanticated , employeUpdate );
 
-// router.post('/employe/avatar/:id', isAuthanticated , employeAvatar );
+router.post('/orglogo/:id', isAuthanticated , employeorglogo );
 
 module.exports = router;

@@ -63,7 +63,7 @@ const studentModel = new mongoose.Schema({
         type:Object,
         default:{
             fileId:'',
-            url:'default.img',
+            url:'https://ik.imagekit.io/grim/default-image.jpg?updatedAt=1712009971957',
         }
     },
     resume:{
