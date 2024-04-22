@@ -33,6 +33,7 @@ app.all('*',(req,res,next)=>{
     next( new ErrorHendler(`Request Url Not Found ${req.url}`, 404 ))
 })
 app.use(generatedErrors);
+
 app.listen(
     process.env.PORT,
     console.log(`app is running on port ${process.env.PORT}`)
